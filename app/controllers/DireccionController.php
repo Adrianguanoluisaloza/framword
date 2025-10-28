@@ -1,0 +1,148 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// En DireccionController.php
+// Rutas corregidas usando __DIR__
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/Direccion.php';
+require_once __DIR__ . '/../models/Persona.php';
+
+class DireccionController {
+    private $direccion;
+    private $persona; 
+    private $db;
+    private $basePath = '/public/'; 
+
+    public function __construct() {
+        $this->db = (new Database())->getConnection();
+        $this->direccion = new Direccion($this->db);
+        $this->persona = new Persona($this->db);
+    }
+
+    // Mostrar todas las direcciones
+    public function index() {
+        
+        $direcciones = $this->direccion->read(); 
+
+        
+        require_once __DIR__ . '/../views/direccion/index.php';
+    }
+
+    // --- MUESTRA EL FORMULARIO DE CREACIÓN ---
+   
+    public function create() {
+        $personas = $this->persona->read();
+        require_once __DIR__ . '/../views/direccion/create.php';
+    }
+
+    // --- PROCESA EL FORMULARIO DE CREACIÓN ---
+
+    public function store() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['nombre'], $_POST['idpersona'])) {
+                $this->direccion->idpersona = $_POST['idpersona'];
+                $this->direccion->nombre = $_POST['nombre'];
+                
+                if ($this->direccion->create()) {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=created');
+                } else {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=error');
+                }
+            } else {
+                header('Location: ' . $this->basePath . 'direccion/create?msg=missingdata');
+            }
+        } else {
+            header('Location: ' . $this->basePath . 'direccion/create');
+        }
+        exit;
+    }
+
+    // --- MUESTRA EL FORMULARIO DE EDICIÓN ---
+    public function edit($iddireccion) {
+        $this->direccion->iddireccion = $iddireccion;
+        $direccion = $this->direccion->readOne();
+        
+        if (!$direccion) {
+            die("Error: No se encontró el registro.");
+        }
+        
+        // Cargar personas para el <select>
+        $personas = $this->persona->read();
+
+        require_once __DIR__ . '/../views/direccion/edit.php';
+    }
+
+    // --- MUESTRA LA VISTA DE CONFIRMACIÓN DE BORRADO ---
+
+    public function eliminar($iddireccion) {
+        $this->direccion->iddireccion = $iddireccion;
+        $direccion = $this->direccion->readOne();
+
+        if (!$direccion) {
+            die("Error: No se encontró el registro.");
+        }
+
+        require_once __DIR__ . '/../views/direccion/delete.php';
+    }
+
+    // --- PROCESA EL FORMULARIO DE EDICIÓN ---
+    public function update() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['iddireccion'], $_POST['nombre'], $_POST['idpersona'])) {
+                $this->direccion->iddireccion = $_POST['iddireccion'];
+                $this->direccion->idpersona = $_POST['idpersona'];
+                $this->direccion->nombre = $_POST['nombre'];
+
+                if ($this->direccion->update()) {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=updated');
+                } else {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=error');
+                }
+            } else {
+                $id = $_POST['iddireccion'] ?? 0;
+                 header('Location: ' . $this->basePath . 'direccion/edit?iddireccion=' . $id . '&msg=missingdata');
+            }
+        } else {
+            header('Location: ' . $this->basePath . 'direccion/index');
+        }
+        exit;
+    }
+
+    // --- PROCESA EL BORRADO ---
+    public function delete() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+            if (isset($_POST['iddireccion'])) {
+                $this->direccion->iddireccion = $_POST['iddireccion'];
+                
+                if ($this->direccion->delete()) {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=deleted');
+                } else {
+                    header('Location: ' . $this->basePath . 'direccion/index?msg=error');
+                }
+            } else {
+                header('Location: ' . $this->basePath . 'direccion/index?msg=missingid');
+            }
+        } else {
+            header('Location: ' . $this->basePath . 'direccion/index');
+        }
+        exit;
+    }
+
+
+    public function api() {
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // CORREGIDO: Llamar a read() en lugar de getAll()
+        $direcciones = $this->direccion->read(); 
+        header('Content-Type: application/json');
+        echo json_encode($direcciones);
+        exit;
+    }
+}
+
+?>
+
