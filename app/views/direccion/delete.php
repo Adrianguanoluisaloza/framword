@@ -1,109 +1,37 @@
-<?php
-    // Define la ruta base para que los enlaces y el 'action' del formulario funcionen
-    $basePath = '/public/'; 
-?>
+<?php $basePath = '/public/'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Eliminar Dirección</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 40px;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #dc3545; /* Color rojo para eliminar */
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            background-color: #e9ecef; /* Fondo gris para campo 'readonly' */
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #dc3545; /* Botón rojo para 'Eliminar' */
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px; /* Espacio para el enlace 'Volver' */
-        }
-
-        input[type="submit"]:hover {
-            background-color: #c82333;
-        }
-        
-        .form-container p {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        /* Estilo para el enlace 'Volver' */
-        .form-container a {
-            display: block;
-            text-align: center;
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .form-container a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar dirección</title>
+    <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
-<body>
+<body class="app-shell">
+    <div class="layout">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Relaciones</p>
+                <h1>Eliminar dirección</h1>
+                <p class="subtitle">Confirma antes de borrar la dirección seleccionada.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="<?php echo $basePath; ?>direccion">Cancelar</a>
+            </div>
+        </header>
 
-    <div class="form-container">
-        <h2>Confirmar Eliminación</h2>
-        <p>¿Estás seguro de que deseas eliminar este registro de dirección?</p>
-
-        <!-- ACTION CORREGIDO: Apunta a la RUTA '/public/direccion/delete' -->
-        <form action="<?php echo $basePath; ?>direccion/delete" method="POST">
-            
-            <!-- ID oculto correcto -->
+        <form class="form-card" action="<?php echo $basePath; ?>direccion/delete" method="POST">
             <input type="hidden" name="iddireccion" value="<?php echo htmlspecialchars($direccion['iddireccion']); ?>">
-            
-            <label for="nombre">Nombre Dirección:</label>
-            <!-- Campo 'readonly' para mostrar el dato sin permitir edición -->
-            <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($direccion['nombre']); ?>" readonly>
-            
-            <input type="submit" value="Confirmar Eliminación">
+            <div class="form-group">
+                <label for="nombre">Dirección</label>
+                <input class="input" type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($direccion['nombre']); ?>" readonly>
+                <p class="helper">Esta acción no se puede revertir.</p>
+            </div>
+            <div class="footer-actions">
+                <a class="btn btn-secondary" href="<?php echo $basePath; ?>direccion">← Volver</a>
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+            </div>
         </form>
-
-        <!-- Enlace para Volver -->
-        <a href="<?php echo $basePath; ?>direccion">Volver al listado</a>
     </div>
-
 </body>
 </html>
