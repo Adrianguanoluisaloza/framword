@@ -1,90 +1,38 @@
+<?php $basePath = '/public/'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Sexo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 40px;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box; /* Añadido para padding correcto */
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px; /* Espacio para el enlace 'Volver' */
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        /* Estilo para el enlace 'Volver' */
-        .form-container a {
-            display: block;
-            text-align: center;
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .form-container a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear sexo</title>
+    <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
-<body>
-    <h1>Crear Nuevo Sexo</h1>
-    
-    <form action="/public/sexo/store" method="POST">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <input type="submit" value="Crear">
-    </form>
+<body class="app-shell">
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
+    <div class="layout">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Catálogos</p>
+                <h1>Nuevo sexo</h1>
+                <p class="subtitle">Añade opciones claras para los formularios de personas.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="<?php echo $basePath; ?>sexo">← Volver al listado</a>
+            </div>
+        </header>
 
-    <a href="/public/sexo">Volver al listado</a>
+        <form class="form-card" action="<?php echo $basePath; ?>sexo/store" method="POST">
+            <h2 class="form-title">Datos básicos</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input class="input" type="text" name="nombre" id="nombre" required>
+            </div>
+            <div class="footer-actions">
+                <p class="helper">Este valor estará disponible al crear o editar personas.</p>
+                <button class="btn btn-primary" type="submit">Crear</button>
+            </div>
+        </form>
+    </div>
+    <script src="<?php echo $basePath; ?>js/script.js"></script>
 </body>
 </html>

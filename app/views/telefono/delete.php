@@ -1,109 +1,39 @@
-<?php
-    // Define la ruta base para que los enlaces y el 'action' del formulario funcionen
-    $basePath = '/public/'; 
-?>
+<?php $basePath = '/public/'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Eliminar Teléfono</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 40px;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #dc3545; /* Color rojo para eliminar */
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            background-color: #e9ecef; /* Fondo gris para campo 'readonly' */
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #dc3545; /* Botón rojo para 'Eliminar' */
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px; /* Espacio para el enlace 'Volver' */
-        }
-
-        input[type="submit"]:hover {
-            background-color: #c82333;
-        }
-        
-        .form-container p {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        /* Estilo para el enlace 'Volver' */
-        .form-container a {
-            display: block;
-            text-align: center;
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .form-container a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar teléfono</title>
+    <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
-<body>
+<body class="app-shell">
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
+    <div class="layout">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Relaciones</p>
+                <h1>Eliminar teléfono</h1>
+                <p class="subtitle">Confirma antes de retirar el número seleccionado.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="<?php echo $basePath; ?>telefono">Cancelar</a>
+            </div>
+        </header>
 
-    <div class="form-container">
-        <h2>Confirmar Eliminación</h2>
-        <p>¿Estás seguro de que deseas eliminar este registro de teléfono?</p>
-
-        <!-- ACTION CORREGIDO: Apunta a la RUTA '/public/telefono/delete' -->
-        <form action="<?php echo $basePath; ?>telefono/delete" method="POST">
-            
-            <!-- ID oculto correcto -->
-            <input type="hidden" name="idtelefono" value="<?php echo htmlspecialchars($telefono['idtelefono'] ?? ''); ?>">
-            
-            <label for="numero">Número de Teléfono:</label>
-            <!-- Campo 'readonly' para mostrar el dato sin permitir edición -->
-            <input type="text" name="numero" id="numero" value="<?php echo htmlspecialchars($telefono['numero'] ?? ''); ?>" readonly>
-            
-            <input type="submit" value="Confirmar Eliminación">
+        <form class="form-card" action="<?php echo $basePath; ?>telefono/delete" method="POST" data-confirm="¿Eliminar este teléfono?">
+            <input type="hidden" name="idtelefono" value="<?php echo htmlspecialchars($telefono['idtelefono']); ?>">
+            <div class="form-group">
+                <label for="numero">Número de teléfono</label>
+                <input class="input" type="text" name="numero" id="numero" value="<?php echo htmlspecialchars($telefono['numero']); ?>" readonly>
+                <p class="helper">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="footer-actions">
+                <a class="btn btn-secondary" href="<?php echo $basePath; ?>telefono">← Volver</a>
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+            </div>
         </form>
-
-        <!-- Enlace para Volver -->
-        <a href="<?php echo $basePath; ?>telefono">Volver al listado</a>
     </div>
-
+    <script src="<?php echo $basePath; ?>js/script.js"></script>
 </body>
 </html>
