@@ -1,0 +1,5 @@
+# Ignorar archivo de configuración local
+.env
+
+# VSCode workspace local settings
+/.vscode/local_settings.json

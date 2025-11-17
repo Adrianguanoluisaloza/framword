@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    container_name: framword-web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    env_file: .env
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+      - DB_HOST=db
+      - DB_NAME=framworddb
+      - DB_USER=framuser
+      - DB_PASS=framword_pass
+      - DB_PORT=3306
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: framword-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: framworddb
+      MYSQL_USER: framuser
+      MYSQL_PASSWORD: framword_pass
+    volumes:
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d:ro
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  db_data:
