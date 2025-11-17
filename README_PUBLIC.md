@@ -145,3 +145,32 @@ php scripts/create_admin.php "Administrador" admin@example.com "admin123"
 Si quieres que este `README_PUBLIC.md` sea el README público del proyecto (y que el actual `README.md` quede como tu `README_personal.md` privado), indícalo y lo realizo: renombraré el actual `README.md` para mantener tu versión privada y moveré esta versión a `README.md` para uso público.
 
 Si prefieres otra estructura o que incluya más imágenes (por ejemplo, miniaturas o una galería), dime cómo la quieres.
+
+---
+
+## Galería (miniaturas) 📸
+
+Aquí tienes una galería con miniaturas; haz clic en la imagen para verla completa.
+
+<table>
+  <tr>
+    <td align="center"><a href="Imagenes%20de%20evidencias/Inicio.png"><img src="Imagenes%20de%20evidencias/Inicio.png" width="240" alt="Inicio"><br><em>Inicio</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/crear%20personas.png"><img src="Imagenes%20de%20evidencias/crear%20personas.png" width="240" alt="Crear persona"><br><em>Crear persona</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/registro.png"><img src="Imagenes%20de%20evidencias/registro.png" width="240" alt="Registro"><br><em>Registro</em></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="Imagenes%20de%20evidencias/iniio%20de%20sesiom.png"><img src="Imagenes%20de%20evidencias/iniio%20de%20sesiom.png" width="240" alt="Inicio de sesión"><br><em>Inicio de sesión</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/estudiante.png"><img src="Imagenes%20de%20evidencias/estudiante.png" width="240" alt="Estudiante"><br><em>Estudiante</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/profesor.png"><img src="Imagenes%20de%20evidencias/profesor.png" width="240" alt="Profesor"><br><em>Profesor</em></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="Imagenes%20de%20evidencias/universidad.png"><img src="Imagenes%20de%20evidencias/universidad.png" width="240" alt="Universidad"><br><em>Universidad</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/sexo.png"><img src="Imagenes%20de%20evidencias/sexo.png" width="240" alt="Sexo"><br><em>Sexo</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/estado%20civil.png"><img src="Imagenes%20de%20evidencias/estado%20civil.png" width="240" alt="Estado Civil"><br><em>Estado Civil</em></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="Imagenes%20de%20evidencias/telefono.png"><img src="Imagenes%20de%20evidencias/telefono.png" width="240" alt="Telefono"><br><em>Teléfono</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/direccion.png"><img src="Imagenes%20de%20evidencias/direccion.png" width="240" alt="Dirección"><br><em>Dirección</em></a></td>
+    <td align="center"><a href="Imagenes%20de%20evidencias/Framework%20educativo.pdf"><img src="Imagenes%20de%20evidencias/Inicio.png" width="240" alt="Framework educativo PDF"><br><em>Framework educativo (PDF)</em></a></td>
+  </tr>
+</table>
