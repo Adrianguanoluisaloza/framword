@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
 <body class="app-shell">
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
     <div class="layout">
         <header class="page-header">
             <div>
@@ -20,7 +21,7 @@
             </div>
         </header>
 
-        <form class="form-card" action="<?php echo $basePath; ?>direccion/delete" method="POST">
+        <form class="form-card" action="<?php echo $basePath; ?>direccion/delete" method="POST" data-confirm="¿Eliminar esta dirección?">
             <input type="hidden" name="iddireccion" value="<?php echo htmlspecialchars($direccion['iddireccion']); ?>">
             <div class="form-group">
                 <label for="nombre">Dirección</label>
@@ -33,5 +34,6 @@
             </div>
         </form>
     </div>
+    <script src="<?php echo $basePath; ?>js/script.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
 <body class="app-shell">
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
     <div class="layout">
         <header class="page-header">
             <div>
@@ -20,7 +21,7 @@
             </div>
         </header>
 
-        <form class="form-card" action="<?php echo $basePath; ?>persona/delete" method="POST">
+        <form class="form-card" action="<?php echo $basePath; ?>persona/delete" method="POST" data-confirm="¿Seguro que deseas eliminar esta persona?">
             <input type="hidden" name="idpersona" value="<?php echo htmlspecialchars($persona['idpersona']); ?>">
             <div class="form-group">
                 <label for="nombre">Persona seleccionada</label>
@@ -33,5 +34,6 @@
             </div>
         </form>
     </div>
+    <script src="<?php echo $basePath; ?>js/script.js"></script>
 </body>
 </html>

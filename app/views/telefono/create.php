@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?php echo $basePath; ?>css/style.css">
 </head>
 <body class="app-shell">
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
     <div class="layout">
         <header class="page-header">
             <div>
@@ -47,5 +48,6 @@
             </div>
         </form>
     </div>
+    <script src="<?php echo $basePath; ?>js/script.js"></script>
 </body>
 </html>
