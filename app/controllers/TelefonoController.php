@@ -6,21 +6,19 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/Telefono.php'; // Corregido: '../models/'
 require_once __DIR__ . '/../models/Persona.php';  // Corregido: '../models/'
+require_once __DIR__ . '/../helpers/url_helper.php';
 
 class TelefonoController {
     private $telefono;
     private $db;
     private $persona;
-    // CORREGIDO: basePath actualizado
-    private $basePath = '/public/'; 
+    private $basePath; 
 
     public function __construct() {
         $this->db = (new Database())->getConnection();
         $this->telefono = new Telefono($this->db);
         $this->persona = new Persona($this->db);
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
-        }
+        $this->basePath = app_base_path();
     }
 
     // Mostrar todos los teléfonos
@@ -155,4 +153,3 @@ class TelefonoController {
 
 // --- TODO EL BLOQUE DEL ENRUTADOR HA SIDO ELIMINADO ---
 ?>
-

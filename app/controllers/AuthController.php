@@ -2,20 +2,17 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../helpers/session_helper.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 
 class AuthController {
     private $db;
     private $userModel;
-    private $basePath = '/public/';
+    private $basePath;
 
     public function __construct() {
         $this->db = (new Database())->getConnection();
         $this->userModel = new User($this->db);
-        // Calcular basePath dinámicamente según el SCRIPT_NAME (soporta server integrado o documento en /public)
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $scriptName = $_SERVER['SCRIPT_NAME'];
-            $this->basePath = rtrim(str_replace('index.php', '', $scriptName), '/') . '/';
-        }
+        $this->basePath = app_base_path();
     }
 
     // Mostrar formulario de login

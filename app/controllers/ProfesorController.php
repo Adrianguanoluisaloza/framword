@@ -1,12 +1,15 @@
 <?php
 // app/controllers/ProfesorController.php
 require_once __DIR__ . '/../helpers/entity_helper.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 require_once __DIR__ . '/../../config/database.php';
 
 class ProfesorController {
     private $pdo;
+    private $basePath;
     public function __construct() {
         $this->pdo = (new Database())->getConnection();
+        $this->basePath = app_base_path();
     }
 
     public function index() {
@@ -22,7 +25,7 @@ class ProfesorController {
             $errors = validateEntity($_POST, 'profesor');
             if (empty($errors)) {
                 createEntity($this->pdo, $_POST, 'profesor');
-                header('Location: /profesor');
+                header('Location: ' . $this->basePath . 'profesor');
                 exit;
             }
         }
@@ -38,7 +41,7 @@ class ProfesorController {
             $errors = validateEntity($_POST, 'profesor');
             if (empty($errors)) {
                 updateEntity($this->pdo, $_POST, 'profesor', $id);
-                header('Location: /profesor');
+                header('Location: ' . $this->basePath . 'profesor');
                 exit;
             }
         }
@@ -47,7 +50,7 @@ class ProfesorController {
 
     public function delete($id) {
         deleteEntity($this->pdo, 'profesor', $id);
-        header('Location: /profesor');
+        header('Location: ' . $this->basePath . 'profesor');
         exit;
     }
 }

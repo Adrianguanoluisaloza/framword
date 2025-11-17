@@ -1,5 +1,6 @@
 <?php
-$basePath = $basePath ?? '/public/';
+require_once dirname(__DIR__, 2) . '/helpers/url_helper.php';
+$basePath = $basePath ?? app_base_path();
 $trimmedBase = rtrim($basePath, '/');
 $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
 $currentRoute = '';

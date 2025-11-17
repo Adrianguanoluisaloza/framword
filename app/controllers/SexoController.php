@@ -4,19 +4,18 @@ error_reporting(E_ALL);
 
 // Rutas corregidas para ser llamadas desde routes/web.php (que está en /public)
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../app/models/Sexo.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
+require_once __DIR__ . '/../models/Sexo.php';
 
 class SexoController {
     private $sexo;
     private $db;
-    private $basePath = '/public/';
+    private $basePath;
 
     public function __construct() {
         $this->db = (new Database())->getConnection();
         $this->sexo = new Sexo($this->db);
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
-        }
+        $this->basePath = app_base_path();
     }
 
     // Mostrar todos los sexos
@@ -121,4 +120,3 @@ class SexoController {
         die();
     }
 }
-

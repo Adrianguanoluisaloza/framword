@@ -1,4 +1,7 @@
-<?php $basePath = '/public/'; ?>
+<?php
+require_once dirname(__DIR__, 2) . '/helpers/url_helper.php';
+$basePath = $basePath ?? app_base_path();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

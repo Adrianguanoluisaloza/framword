@@ -4,19 +4,18 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/Estadocivil.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 
 class EstadocivilController {
     private $estadocivil;
     private $db;
-    private $basePath = '/public/'; 
+    private $basePath; 
 
     public function __construct() {
         $this->db = (new Database())->getConnection();
         // Nombre de modelo corregido a PascalCase (asumiendo que el modelo también lo es)
         $this->estadocivil = new Estadocivil($this->db);
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
-        }
+        $this->basePath = app_base_path();
     }
 
     // Mostrar todos los estados civiles

@@ -7,21 +7,19 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/Direccion.php';
 require_once __DIR__ . '/../models/Persona.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 
 class DireccionController {
     private $direccion;
     private $persona; 
     private $db;
-    private $basePath = '/public/'; 
+    private $basePath; 
 
     public function __construct() {
         $this->db = (new Database())->getConnection();
         $this->direccion = new Direccion($this->db);
         $this->persona = new Persona($this->db);
-        // Calcular basePath dinámico (soporta dev server y Docker container)
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
-        }
+        $this->basePath = app_base_path();
     }
 
     // Mostrar todas las direcciones
@@ -149,4 +147,3 @@ class DireccionController {
 }
 
 ?>
-

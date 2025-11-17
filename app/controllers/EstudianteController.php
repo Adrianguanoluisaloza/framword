@@ -1,12 +1,15 @@
 <?php
 // app/controllers/EstudianteController.php
 require_once __DIR__ . '/../helpers/entity_helper.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 require_once __DIR__ . '/../../config/database.php';
 
 class EstudianteController {
     private $pdo;
+    private $basePath;
     public function __construct() {
         $this->pdo = (new Database())->getConnection();
+        $this->basePath = app_base_path();
     }
 
     public function index() {
@@ -22,7 +25,7 @@ class EstudianteController {
             $errors = validateEntity($_POST, 'estudiante');
             if (empty($errors)) {
                 createEntity($this->pdo, $_POST, 'estudiante');
-                header('Location: /estudiante');
+                header('Location: ' . $this->basePath . 'estudiante');
                 exit;
             }
         }
@@ -38,7 +41,7 @@ class EstudianteController {
             $errors = validateEntity($_POST, 'estudiante');
             if (empty($errors)) {
                 updateEntity($this->pdo, $_POST, 'estudiante', $id);
-                header('Location: /estudiante');
+                header('Location: ' . $this->basePath . 'estudiante');
                 exit;
             }
         }
@@ -47,7 +50,7 @@ class EstudianteController {
 
     public function delete($id) {
         deleteEntity($this->pdo, 'estudiante', $id);
-        header('Location: /estudiante');
+        header('Location: ' . $this->basePath . 'estudiante');
         exit;
     }
 }

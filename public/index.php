@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../app/helpers/url_helper.php';
 
 // --- CONTROLADORES ---
 require_once __DIR__ . '/../app/controllers/PersonaController.php';
@@ -10,9 +11,7 @@ require_once __DIR__ . '/../app/controllers/EstadocivilController.php';
 
 // --- ANÁLISIS DE RUTA ---
 $requestUri = $_SERVER["REQUEST_URI"];
-// Detectar basePath dinámicamente en función de SCRIPT_NAME (soporta /public/index.php o /index.php)
-$scriptName = $_SERVER['SCRIPT_NAME']; // Ejemplo: /public/index.php o /index.php
-$basePath = rtrim(str_replace('index.php', '', $scriptName), '/') . '/';
+$basePath = app_base_path();
 
 // Obtener la ruta relativa al basePath
 $route = '';

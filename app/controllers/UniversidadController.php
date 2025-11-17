@@ -1,12 +1,15 @@
 <?php
 // app/controllers/UniversidadController.php
 require_once __DIR__ . '/../helpers/entity_helper.php';
+require_once __DIR__ . '/../helpers/url_helper.php';
 require_once __DIR__ . '/../../config/database.php';
 
 class UniversidadController {
     private $pdo;
+    private $basePath;
     public function __construct() {
         $this->pdo = (new Database())->getConnection();
+        $this->basePath = app_base_path();
     }
 
     public function index() {
@@ -22,7 +25,7 @@ class UniversidadController {
             $errors = validateEntity($_POST, 'universidad');
             if (empty($errors)) {
                 createEntity($this->pdo, $_POST, 'universidad');
-                header('Location: /universidad');
+                header('Location: ' . $this->basePath . 'universidad');
                 exit;
             }
         }
@@ -38,7 +41,7 @@ class UniversidadController {
             $errors = validateEntity($_POST, 'universidad');
             if (empty($errors)) {
                 updateEntity($this->pdo, $_POST, 'universidad', $id);
-                header('Location: /universidad');
+                header('Location: ' . $this->basePath . 'universidad');
                 exit;
             }
         }
@@ -47,7 +50,7 @@ class UniversidadController {
 
     public function delete($id) {
         deleteEntity($this->pdo, 'universidad', $id);
-        header('Location: /universidad');
+        header('Location: ' . $this->basePath . 'universidad');
         exit;
     }
 }
