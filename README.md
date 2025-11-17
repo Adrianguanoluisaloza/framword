@@ -1,3 +1,151 @@
+## framword-main
+
+Pequeño proyecto PHP MVC (ejemplo) para gestionar Personas, Teléfonos, Direcciones y catálogos básicos.
+
+Este README explica cómo ejecutar el proyecto:
+ - Usando Docker (recomendado en desarrollo para reproducibilidad)
+ - Usando PHP CLI (rápido en local cuando no hay contenedores disponibles)
+
+---
+
+### Requisitos
+- PHP >= 8.0 (para correr el servidor integrado si no usas Docker)
+- Docker / Podman + docker-compose (recomendado para orquestación)
+- Extensión PHP `pdo_mysql` para conexión a MySQL (si usas PHP CLI)
+
+---
+
+### 1) Clonar repositorio
+```bash
+git clone https://github.com/Adrianguanoluisaloza/framword.git
+cd framword
+```
+
+### 2) Preparar el archivo `.env`
+```bash
+cp .env.example .env
+# Si ejecutas la app localmente (sin docker-compose), cambia DB_HOST a 127.0.0.1
+sed -i 's/^DB_HOST=db$/DB_HOST=127.0.0.1/' .env
+```
+
+---
+
+### 3) Opción A — Ejecutar con Docker Compose (recomendado)
+1) Levanta los servicios:
+```bash
+docker compose up -d --build
+```
+2) Espera a que los servicios estén listos. Puedes verificar el estado:
+```bash
+docker compose ps
+```
+3) (Opcional) Si necesitas asegurar que las tablas están creadas o correr migraciones (por ejemplo si el volumen ya existía):
+```bash
+docker compose exec web php scripts/migrate.php
+docker compose exec web php scripts/seed.php # opcional
+```
+4) Probar el estado:
+```bash
+curl -i http://127.0.0.1:8000/public/status
+```
+
+Nota: si usas `podman-compose` reemplaza `docker compose` por `podman-compose` en los comandos.
+
+---
+
+### 4) Opción B — Ejecutar en local con PHP CLI (sin contenedores)
+1) Instala PHP CLI y extensiones necesarias:
+```bash
+sudo apt update
+sudo apt install -y php-cli php-mbstring php-xml php-json
+```
+2) Si usas MySQL local (instalado por separado), ajusta `.env` con las credenciales y host correctos.
+3) Aplica migraciones y semillas (si el esquema aún no está creado):
+```bash
+php scripts/migrate.php
+php scripts/seed.php # opcional
+```
+4) Inicia el servidor integrado desde la raíz del proyecto (docroot `public`):
+```bash
+php -S 127.0.0.1:8000 -t public
+```
+Si el puerto 8000 está ocupado usa otro puerto: `php -S 127.0.0.1:8001 -t public`.
+
+También puedes usar el helper `scripts/run.sh` que intenta detectar Docker o PHP CLI y elegir la mejor opción:
+```bash
+chmod +x scripts/run.sh
+./scripts/run.sh 8000
+```
+
+---
+
+### 5) Migraciones / si ya existe contenedor
+Si tu contenedor ya existía y tiene datos, el `docker-entrypoint-initdb.d` no se ejecuta porque MySQL solo ejecuta init SQL la primera vez, por lo que para aplicar las tablas en un contenedor existente puedes:
+```bash
+php scripts/migrate.php
+```
+
+Esto abrirá las sentencias definidas en `docker/mysql-init/init.sql` y las intentará ejecutar. Es segura para desarrollo, pero revisa los `WARN` si existen tablas ya creadas.
+
+---
+
+### 6) Crear usuario admin y datos de ejemplo
+Crear admin (ejecutar después de migraciones):
+```bash
+php scripts/create_admin.php "Administrador" admin@example.com "admin123"
+```
+Insertar datos de ejemplo:
+```bash
+php scripts/seed.php
+```
+
+---
+
+### 7) Probar la app
+Abrir las URLs en el navegador:
+- Home: `http://127.0.0.1:8000/public/`
+- Personas: `http://127.0.0.1:8000/public/persona`
+- Login: `http://127.0.0.1:8000/public/auth/login`
+
+Comprobación rápida de endpoints (curl):
+```bash
+curl -I http://127.0.0.1:8000/public/status
+curl -I http://127.0.0.1:8000/public/auth/login
+```
+
+---
+
+### 8) Troubleshooting (errores comunes)
+- Si `php` no está en PATH y ves advertencias en VSCode, instala PHP CLI (ver sección Local) o usa el wrapper `scripts/php-wrapper.sh`.
+- Si `curl` devuelve `500 Internal Server Error`:
+ ```bash
+# Si usas docker:
+docker compose logs web --tail 200
+docker compose exec web tail -n 200 /var/log/apache2/error.log || true
+
+# Si usas PHP CLI (php -S): la salida de errores aparece en la terminal donde ejecutaste el servidor
+```
+- Si no se crean tablas al usar Docker: reinicia el contenedor borrando el volumen de datos (destruye datos):
+```bash
+docker compose down -v
+docker compose up -d --build
+```
+
+---
+
+### 9) VSCode y PHP
+- El repo incluye `.vscode/settings.json` con `php.executablePath` apuntando al wrapper (`scripts/php-wrapper.sh`) si no tienes PHP local.
+- Verifica en VSCode: `Preferences -> Settings -> PHP -> Executable Path` y/o `php.validate.executablePath`.
+- Para debugging con Xdebug, ajusta el contenedor o tu entorno local según tus preferencias (no está configurado por defecto en este proyecto).
+
+---
+
+### 10) Recomendaciones de integración (CI)
+- Añadir un workflow de GitHub Actions que haga `php -v`, `php -l` (sintaxis), `composer check` (si llegas a usar composer) y que intente levantar los servicios en Docker para ejecutar `scripts/quick_test.sh`.
+
+---
+
+Si necesitas más ayuda con un paso específico (por ejemplo, explicar cómo configurar `.env` con tu servidor de BD local, o cómo hacer que VSCode use el PHP del contenedor), dime el sistema operativo (Linux/macOS/Windows/WSL) y lo preparo para ti.
 
 # framword-main
 
