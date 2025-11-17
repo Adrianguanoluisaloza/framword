@@ -62,7 +62,7 @@ Las imágenes y PDFs se encuentran en `Imagenes de evidencias/`.
 
 ### Crear persona (ejemplo)
 
-![Crear persona](Imagenes%20de%20evidencias/Crear%20persona.png)
+![Crear persona](Imagenes%20de%20evidencias/crear%20personas.png)
 *Formulario de creación y validación de `Persona`*
 
 ### Módulos académicos
