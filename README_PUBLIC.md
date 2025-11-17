@@ -1,0 +1,147 @@
+# Framword — Guía visual y pública
+
+Framword es un proyecto educativo PHP que demuestra un patrón MVC simple para gestionar Personas, Teléfonos, Direcciones y módulos académicos (Estudiante, Profesor, Universidad).
+
+Este README público explica las características principales, la ejecución rápida del proyecto, y ofrece capturas de la interfaz y enlaces a los PDF incluidos en el repositorio como evidencia.
+
+---
+
+## Qué incluye (resumen)
+
+- CRUD para `Persona`, `Telefono`, `Direccion` con validaciones.
+- Módulos académicos: `Estudiante`, `Profesor`, `Universidad`.
+- Catálogos de referencia: `Sexo`, `Estado Civil` y más.
+- Scripts de migración y seed para desarrollo: `scripts/migrate.php`, `scripts/seed.php`.
+- Scripts de ayuda: `scripts/run.sh`, `scripts/php-wrapper.sh`, `scripts/check_php.sh`.
+
+---
+
+## Quick start (público)
+
+Recomendado: usar Docker / docker-compose.
+
+1) Clona el repo:
+```bash
+git clone https://github.com/Adrianguanoluisaloza/framword.git
+cd framword
+```
+2) Copia `.env.example`:
+```bash
+cp .env.example .env
+# Si ejecutas localmente sin docker compose, DB_HOST=127.0.0.1
+```
+3) Opcional: usa contenedores:
+```bash
+docker compose up -d --build
+```
+4) Correr migraciones y seeds si lo necesitas:
+```bash
+docker compose exec web php scripts/migrate.php
+# opcional
+docker compose exec web php scripts/seed.php
+```
+5) Accede: `http://127.0.0.1:8000/public/`
+
+Para alternativas en PHP CLI o Podman revisa el README interno del proyecto.
+
+---
+
+## Vista visual — capturas y PDF (evidencias)
+
+Las imágenes y PDFs se encuentran en `Imagenes de evidencias/`.
+
+### Inicio y navegación
+
+![Inicio](Imagenes%20de%20evidencias/Inicio.png)
+*Inicio con navegación a módulos principales*.
+
+### Login y registro
+
+![Inicio de sesión](Imagenes%20de%20evidencias/iniio%20de%20sesiom.png)
+![Registro](Imagenes%20de%20evidencias/registro.png)
+
+### Crear persona (ejemplo)
+
+![Crear persona](Imagenes%20de%20evidencias/Crear%20persona.png)
+*Formulario de creación y validación de `Persona`*
+
+### Módulos académicos
+
+![Estudiante](Imagenes%20de%20evidencias/estudiante.png)
+![Profesor](Imagenes%20de%20evidencias/profesor.png)
+![Universidad](Imagenes%20de%20evidencias/universidad.png)
+
+### Catálogos y soporte
+
+![Sexo](Imagenes%20de%20evidencias/sexo.png)
+![Estado Civil](Imagenes%20de%20evidencias/estado%20civil.png)
+![Telefono](Imagenes%20de%20evidencias/telefono.png)
+![Direccion](Imagenes%20de%20evidencias/direccion.png)
+
+### PDFs incluidos
+
+- [Framework educativo.pdf](Imagenes%20de%20evidencias/Framework%20educativo.pdf) — Explica la visión y arquitectura educativa del proyecto.
+- [Crear persona.pdf](Imagenes%20de%20evidencias/Crear%20persona.pdf) — Guía ilustrada del flujo de `Persona`.
+
+---
+
+## Persona: estructura y mapeo a BD 🧾
+
+La entidad `Persona` es la pieza central del sistema: almacena la información básica de personas que pueden ser estudiantes, profesores o roles diversos.
+
+Tabla en la BD: `persona`
+
+Columnas principales:
+- `idpersona` INT AUTO_INCREMENT PRIMARY KEY — Identificador único.
+- `nombres` VARCHAR(255) NOT NULL — Nombres de la persona.
+- `apellidos` VARCHAR(255) NOT NULL — Apellidos.
+- `fechanacimiento` DATE NULL — Fecha de nacimiento.
+- `rol` VARCHAR(20) NOT NULL DEFAULT 'estudiante' — Rol en el sistema (ej.: estudiante, profesor).
+- `detalle` TEXT NULL — Campo de texto para datos adicionales.
+- `idsexo` INT NULL — FK a tabla `sexo` (masculino/femenino) — ON DELETE SET NULL.
+- `idestadocivil` INT NULL — FK a tabla `estadocivil` — ON DELETE SET NULL.
+
+Relaciones y tablas asociadas:
+- `telefono` — (1:N) cada `persona` puede tener varios `telefonos` (tabla `telefono` con `idpersona`).
+- `direccion` — (1:N) cada `persona` puede tener varias `direcciones` (tabla `direccion` con `idpersona`).
+- `estudiantes` / `profesores` — (1:1) tablas que dependan de `persona` para roles académicos (en este proyecto, se gestionan por separado en tablas `estudiantes` y `profesores` para datos específicos como `matricula` o `rfc`).
+
+Ejemplo: cómo agregar una persona usando SQL
+```sql
+INSERT INTO persona (nombres, apellidos, fechanacimiento, rol, detalle, idsexo, idestadocivil)
+VALUES ('Juan', 'Pérez', '1997-05-13', 'estudiante', 'Referencia: exalumno', 1, 1);
+```
+
+Ejemplo: consulta para recuperar persona y teléfonos
+```sql
+SELECT p.*, t.numero FROM persona p
+LEFT JOIN telefono t ON p.idpersona = t.idpersona
+WHERE p.idpersona = 1;
+```
+
+Modelo PHP (`app/models/Persona.php`) — mapeo de campos
+- `public $id`, `public $nombres`, `public $apellidos`, `public $fechanacimiento`, `public $rol`, `public $detalle`, `public $idsexo`, `public $idestadocivil`
+
+Nota: En el código del proyecto, hay helpers (`entity_helper.php`) para insertar/actualizar personas y sus entidades asociadas. También existen scripts `scripts/migrate.php` y `docker/mysql-init/init.sql` que definen la estructura exacta y pueden usarse para crear la BD localmente.
+
+---
+
+Si quieres que agregue un ER diagram simple o un SQL dump de ejemplo en la carpeta `Imagenes de evidencias/` o en `scripts/`, lo hago ahora.
+
+---
+
+## Preguntas frecuentes (público)
+
+- ¿Puedo usarlo en producción?
+  No, este proyecto es principalmente para aprendizaje y demostración. Requiere ajustes (seguridad, autenticación robusta, saneamiento de entrada, etc.) para producción.
+
+- ¿Cómo creo un usuario admin?
+```bash
+php scripts/create_admin.php "Administrador" admin@example.com "admin123"
+```
+
+---
+
+Si quieres que este `README_PUBLIC.md` sea el README público del proyecto (y que el actual `README.md` quede como tu `README_personal.md` privado), indícalo y lo realizo: renombraré el actual `README.md` para mantener tu versión privada y moveré esta versión a `README.md` para uso público.
+
+Si prefieres otra estructura o que incluya más imágenes (por ejemplo, miniaturas o una galería), dime cómo la quieres.
