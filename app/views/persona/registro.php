@@ -22,9 +22,20 @@
         </header>
 
         <form class="form-card" action="<?php echo $basePath; ?>persona/update" method="POST">
+            <?php echo csrf_field(); ?>
             <input type="hidden" name="idpersona" value="<?= $persona['idpersona'] ?>">
             <h2 class="form-title">Información de la persona</h2>
             <div class="form-grid">
+                <div class="form-group">
+                    <label for="rol">Rol</label>
+                    <select class="select" name="rol" id="rol" data-role-select required>
+                        <?php foreach ($roles as $key => $label): ?>
+                            <option value="<?php echo $key; ?>" <?php echo (($persona['rol'] ?? 'estudiante') === $key) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($label); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="nombres">Nombres</label>
                     <input class="input" type="text" name="nombres" id="nombres" value="<?= htmlspecialchars($persona['nombres']) ?>" required>
@@ -36,6 +47,10 @@
                 <div class="form-group">
                     <label for="fechanacimiento">Fecha de nacimiento</label>
                     <input class="input" type="date" name="fechanacimiento" id="fechanacimiento" value="<?= $persona['fechanacimiento'] ?>" required>
+                </div>
+                <div class="form-group form-group--full">
+                    <label for="detalle" data-role-label>Detalle del perfil</label>
+                    <textarea class="input" name="detalle" id="detalle" rows="3" data-role-field placeholder="Describe la carrera, especialidad o información clave."><?php echo htmlspecialchars($persona['detalle'] ?? ''); ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="idsexo">Sexo</label>

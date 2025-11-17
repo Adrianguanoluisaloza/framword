@@ -22,6 +22,8 @@
         </header>
 
         <form class="form-card" action="<?php echo $basePath; ?>persona/delete" method="POST" data-confirm="¿Seguro que deseas eliminar esta persona?">
+            <?php include __DIR__ . '/../partials/messages.php'; ?>
+            <?php echo csrf_field(); ?>
             <input type="hidden" name="idpersona" value="<?php echo htmlspecialchars($persona['idpersona']); ?>">
             <div class="form-group">
                 <label for="nombre">Persona seleccionada</label>

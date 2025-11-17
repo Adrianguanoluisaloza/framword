@@ -1,0 +1,21 @@
+{
+  // Ajusta el ejecutable PHP local si difiere en tu sistema (ej. /usr/local/bin/php en macOS/Apple Silicon).
+  // Si tienes PHP local instalado deja `/usr/bin/php`. Si trabajas en Docker, usa el wrapper: `${workspaceFolder}/scripts/php-wrapper.sh`.
+  "php.executablePath": "${workspaceFolder}/scripts/php-wrapper.sh",
+  "php.validate.executablePath": "${workspaceFolder}/scripts/php-wrapper.sh",
+  "php.debug.executablePath": "${workspaceFolder}/scripts/php-wrapper.sh",
+  "php.validate.run": "onSave",
+  "php.suggest.basic": true,
+  "php.format.enable": true,
+  "php.format.defaultFormatter": "kokororin.vscode-phpfmt",
+  "php.validate.enable": true,
+  // Si usas Java, actualiza la clave de configuración si la extensión lo advierte (suplantar java.home si ves advertencia)
+  "java.jdt.ls.java.home": "/home/neoroot/.var/app/com.visualstudio.code/config/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/latest",
+  "code-runner.executorMap": {
+    "php": "php",
+    "java": "java",
+    "python": "python3",
+    "sh": "bash"
+  },
+  "code-runner.runInTerminal": true
+}

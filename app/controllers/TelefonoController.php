@@ -18,6 +18,9 @@ class TelefonoController {
         $this->db = (new Database())->getConnection();
         $this->telefono = new Telefono($this->db);
         $this->persona = new Persona($this->db);
+        if (isset($_SERVER['SCRIPT_NAME'])) {
+            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
+        }
     }
 
     // Mostrar todos los teléfonos

@@ -14,6 +14,9 @@ class EstadocivilController {
         $this->db = (new Database())->getConnection();
         // Nombre de modelo corregido a PascalCase (asumiendo que el modelo también lo es)
         $this->estadocivil = new Estadocivil($this->db);
+        if (isset($_SERVER['SCRIPT_NAME'])) {
+            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
+        }
     }
 
     // Mostrar todos los estados civiles

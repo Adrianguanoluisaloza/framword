@@ -9,6 +9,8 @@ class Persona {
     public $nombres;
     public $apellidos;
     public $fechanacimiento;
+    public $rol = 'estudiante';
+    public $detalle;
     public $idsexo;
     public $idestadocivil;
 
@@ -20,15 +22,22 @@ class Persona {
     // Crear una nueva persona
     public function create() {
         try {
-            $query = "INSERT INTO " . $this->table_name . " (nombres, apellidos, fechanacimiento, idsexo, idestadocivil)
-                      VALUES (:nombres, :apellidos, :fechanacimiento, :idsexo, :idestadocivil)";
+            $query = "INSERT INTO " . $this->table_name . " (nombres, apellidos, fechanacimiento, rol, detalle, idsexo, idestadocivil)
+                      VALUES (:nombres, :apellidos, :fechanacimiento, :rol, :detalle, :idsexo, :idestadocivil)";
 
             $stmt = $this->conn->prepare($query);
 
             // Bind de los valores
             $stmt->bindParam(":nombres", $this->nombres, PDO::PARAM_STR);
             $stmt->bindParam(":apellidos", $this->apellidos, PDO::PARAM_STR);
+            $detalle = $this->detalle;
+            if ($detalle === '') {
+                $detalle = null;
+            }
+
             $stmt->bindParam(":fechanacimiento", $this->fechanacimiento, PDO::PARAM_STR);
+            $stmt->bindParam(":rol", $this->rol, PDO::PARAM_STR);
+            $stmt->bindValue(":detalle", $detalle, $detalle === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
             $stmt->bindParam(":idsexo", $this->idsexo, PDO::PARAM_INT);
             $stmt->bindParam(":idestadocivil", $this->idestadocivil, PDO::PARAM_INT);
 
@@ -58,6 +67,8 @@ class Persona {
                         p.nombres,
                         p.apellidos,
                         p.fechanacimiento,
+                        p.rol,
+                        p.detalle,
                         p.idsexo,
                         p.idestadocivil,
                         s.nombre AS sexo_nombre, 
@@ -90,6 +101,8 @@ class Persona {
                         p.nombres,
                         p.apellidos,
                         p.fechanacimiento,
+                        p.rol,
+                        p.detalle,
                         p.idsexo,
                         p.idestadocivil,
                         s.nombre AS sexo_nombre, 
@@ -115,6 +128,8 @@ class Persona {
                 $this->nombres = $row['nombres'];
                 $this->apellidos = $row['apellidos']; // Corregido: $this->apellidos
                 $this->fechanacimiento = $row['fechanacimiento'];
+                $this->rol = $row['rol'];
+                $this->detalle = $row['detalle'];
                 $this->idsexo = $row['idsexo'];
                 $this->idestadocivil = $row['idestadocivil'];
                 
@@ -135,6 +150,8 @@ class Persona {
                             nombres = :nombres,
                             apellidos = :apellidos,
                             fechanacimiento = :fechanacimiento,
+                            rol = :rol,
+                            detalle = :detalle,
                             idsexo = :idsexo,
                             idestadocivil = :idestadocivil
                         WHERE idpersona = :idpersona";
@@ -144,7 +161,14 @@ class Persona {
             // Bind de los valores
             $stmt->bindParam(":nombres", $this->nombres, PDO::PARAM_STR);
             $stmt->bindParam(":apellidos", $this->apellidos, PDO::PARAM_STR);
+            $detalle = $this->detalle;
+            if ($detalle === '') {
+                $detalle = null;
+            }
+
             $stmt->bindParam(":fechanacimiento", $this->fechanacimiento, PDO::PARAM_STR);
+            $stmt->bindParam(":rol", $this->rol, PDO::PARAM_STR);
+            $stmt->bindValue(":detalle", $detalle, $detalle === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
             $stmt->bindParam(":idsexo", $this->idsexo, PDO::PARAM_INT);
             $stmt->bindParam(":idestadocivil", $this->idestadocivil, PDO::PARAM_INT);
             $stmt->bindParam(":idpersona", $this->idpersona, PDO::PARAM_INT);
@@ -187,4 +211,3 @@ class Persona {
     }
 }
 ?>
-

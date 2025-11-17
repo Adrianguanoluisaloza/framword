@@ -18,6 +18,10 @@ class DireccionController {
         $this->db = (new Database())->getConnection();
         $this->direccion = new Direccion($this->db);
         $this->persona = new Persona($this->db);
+        // Calcular basePath dinámico (soporta dev server y Docker container)
+        if (isset($_SERVER['SCRIPT_NAME'])) {
+            $this->basePath = rtrim(str_replace('index.php', '', $_SERVER['SCRIPT_NAME']), '/') . '/';
+        }
     }
 
     // Mostrar todas las direcciones
