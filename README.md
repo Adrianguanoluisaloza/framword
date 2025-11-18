@@ -142,10 +142,7 @@ php scripts/create_admin.php "Administrador" admin@example.com "admin123"
 
 ---
 
-Si quieres que este `README_PUBLIC.md` sea el README público del proyecto (y que el actual `README.md` quede como tu `README_personal.md` privado), indícalo y lo realizo: renombraré el actual `README.md` para mantener tu versión privada y moveré esta versión a `README.md` para uso público.
-
-Si prefieres otra estructura o que incluya más imágenes (por ejemplo, miniaturas o una galería), dime cómo la quieres.
-
+ 
 ---
 
 ## Galería (miniaturas) 📸
