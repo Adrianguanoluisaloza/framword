@@ -126,7 +126,7 @@ Nota: En el código del proyecto, hay helpers (`entity_helper.php`) para inserta
 
 ---
 
-Si quieres que agregue un ER diagram simple o un SQL dump de ejemplo en la carpeta `Imagenes de evidencias/` o en `scripts/`, lo hago ahora.
+Puedes encontrar un diagrama ER simple y un script SQL del esquema en `Imagenes de evidencias/er_diagram.svg` y `scripts/schema_dump.sql`.
 
 ---
 

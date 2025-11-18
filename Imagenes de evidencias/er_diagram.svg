@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  <style>
+    .table { fill: #f8f9fa; stroke: #333; stroke-width: 1; }
+    .title { font: bold 14px Arial; }
+    .field { font: 12px Arial; }
+    .fk { stroke: #2b7bd3; stroke-width: 1.5; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <polygon points="0 0, 6 3, 0 6" fill="#2b7bd3" />
+    </marker>
+  </defs>
+
+  <!-- persona table -->
+  <g transform="translate(50,40)">
+    <rect class="table" width="220" height="160" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">persona</text>
+    <text class="field" x="12" y="45">idpersona (PK)</text>
+    <text class="field" x="12" y="65">nombres</text>
+    <text class="field" x="12" y="85">apellidos</text>
+    <text class="field" x="12" y="105">fechanacimiento</text>
+    <text class="field" x="12" y="125">rol</text>
+    <text class="field" x="12" y="145">idsexo (FK)</text>
+  </g>
+
+  <!-- sexo table -->
+  <g transform="translate(320,40)">
+    <rect class="table" width="160" height="60" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">sexo</text>
+    <text class="field" x="12" y="40">id (PK) — nombre</text>
+  </g>
+
+  <!-- estadocivil table -->
+  <g transform="translate(520,40)">
+    <rect class="table" width="200" height="60" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">estadocivil</text>
+    <text class="field" x="12" y="40">idestadocivil (PK) — nombre</text>
+  </g>
+
+  <!-- telefono -->
+  <g transform="translate(50,220)">
+    <rect class="table" width="220" height="80" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">telefono</text>
+    <text class="field" x="12" y="45">idtelefono (PK) — numero</text>
+    <text class="field" x="12" y="65">idpersona (FK)</text>
+  </g>
+
+  <!-- direccion -->
+  <g transform="translate(320,220)">
+    <rect class="table" width="220" height="80" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">direccion</text>
+    <text class="field" x="12" y="45">iddireccion (PK) — nombre</text>
+    <text class="field" x="12" y="65">idpersona (FK)</text>
+  </g>
+
+  <!-- universidades -->
+  <g transform="translate(50,360)">
+    <rect class="table" width="240" height="80" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">universidades</text>
+    <text class="field" x="12" y="45">id (PK) — nombre</text>
+    <text class="field" x="12" y="65">clave</text>
+  </g>
+
+  <!-- estudiantes -->
+  <g transform="translate(320,360)">
+    <rect class="table" width="220" height="80" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">estudiantes</text>
+    <text class="field" x="12" y="45">id (PK) — nombre</text>
+    <text class="field" x="12" y="65">matricula — universidad_id (FK)</text>
+  </g>
+
+  <!-- profesores -->
+  <g transform="translate(560,360)">
+    <rect class="table" width="220" height="80" rx="6" ry="6"></rect>
+    <text class="title" x="12" y="20">profesores</text>
+    <text class="field" x="12" y="45">id (PK) — nombre</text>
+    <text class="field" x="12" y="65">rfc — universidad_id (FK)</text>
+  </g>
+
+  <!-- FK lines -->
+  <line class="fk" x1="200" y1="120" x2="320" y2="100" />
+  <line class="fk" x1="270" y1="120" x2="520" y2="100" />
+  <line class="fk" x1="140" y1="300" x2="160" y2="200" />
+  <line class="fk" x1="260" y1="300" x2="400" y2="260" />
+  <line class="fk" x1="140" y1="420" x2="320" y2="420" />
+  <line class="fk" x1="420" y1="420" x2="520" y2="420" />
+
+  <!-- Legend -->
+  <rect x="10" y="520" width="220" height="70" rx="6" ry="6" fill="#fff" stroke="#ccc" />
+  <text x="24" y="544" font-family="Arial" font-size="12">Legend:</text>
+  <text x="24" y="564" font-family="Arial" font-size="12">PK — Primary Key; FK — Foreign Key</text>
+</svg>
