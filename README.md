@@ -12,7 +12,72 @@ Este README público explica las características principales, la ejecución rá
 - Módulos académicos: `Estudiante`, `Profesor`, `Universidad`.
 - Catálogos de referencia: `Sexo`, `Estado Civil` y más.
 - Scripts de migración y seed para desarrollo: `scripts/migrate.php`, `scripts/seed.php`.
-- Scripts de ayuda: `scripts/run.sh`, `scripts/php-wrapper.sh`, `scripts/check_php.sh`.
+Puedes encontrar un diagrama ER simple y un script SQL del esquema en `Imagenes de evidencias/er_diagram_er.svg` y `scripts/schema_dump.sql`.
+
+### Diagrama ER (Mermaid)
+
+```mermaid
+erDiagram
+  PERSONA {
+    INT idpersona PK
+    VARCHAR nombres
+    VARCHAR apellidos
+    DATE fechanacimiento
+    VARCHAR rol
+    TEXT detalle
+    INT idsexo FK
+    INT idestadocivil FK
+  }
+  SEXO {
+    INT id PK
+    VARCHAR nombre
+  }
+  ESTADOCIVIL {
+    INT idestadocivil PK
+    VARCHAR nombre
+  }
+  TELEFONO {
+    INT idtelefono PK
+    VARCHAR numero
+    INT idpersona FK
+  }
+  DIRECCION {
+    INT iddireccion PK
+    VARCHAR nombre
+    INT idpersona FK
+  }
+  UNIVERSIDAD {
+    INT id PK
+    VARCHAR nombre
+    VARCHAR clave
+  }
+  ESTUDIANTES {
+    INT id PK
+    VARCHAR nombre
+    VARCHAR matricula
+    INT universidad_id FK
+  }
+  PROFESORES {
+    INT id PK
+    VARCHAR nombre
+    VARCHAR rfc
+    INT universidad_id FK
+  }
+  USERS {
+    INT id PK
+    VARCHAR name
+    VARCHAR email
+  }
+
+  PERSONA ||--o{ TELEFONO : has
+  PERSONA ||--o{ DIRECCION : has
+  PERSONA }o--|| SEXO : belongs_to
+  PERSONA }o--|| ESTADOCIVIL : belongs_to
+  UNIVERSIDAD ||--o{ ESTUDIANTES : has
+  UNIVERSIDAD ||--o{ PROFESORES : has
+  ESTUDIANTES ||--|| PERSONA : may_map_to
+  PROFESORES ||--|| PERSONA : may_map_to
+```
 
 ---
 
