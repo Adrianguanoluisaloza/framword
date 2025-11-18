@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .entity { fill: #ffffff; stroke: #333; stroke-width: 2; }
+    .entity_title { font: bold 14px Arial; fill: #111; }
+    .attr { font: 12px Arial; fill: #222; }
+    .rel { font: 12px Arial; fill: #222; font-style: italic; }
+    .fk_line { stroke: #333; stroke-width: 1.5; fill: none }
+    .crow { stroke: #333; stroke-width: 1.5; fill: #333 }
+    .card { font: 12px Arial; fill: #222 }
+  </style>
+
+  <!-- Entities -->
+  <g id="persona" transform="translate(50,70)">
+    <rect class="entity" width="240" height="130" rx="8" ry="8"/>
+    <text class="entity_title" x="14" y="24">Persona</text>
+    <text class="attr" x="14" y="46">PK idpersona</text>
+    <text class="attr" x="14" y="66">nombres</text>
+    <text class="attr" x="14" y="86">apellidos</text>
+    <text class="attr" x="14" y="106">fechanacimiento</text>
+    <text class="attr" x="14" y="126">rol, detalle, idsexo(FK), idestadocivil(FK)</text>
+  </g>
+
+  <g id="telefono" transform="translate(360,70)">
+    <rect class="entity" width="220" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="14" y="24">Telefono</text>
+    <text class="attr" x="14" y="44">PK idtelefono</text>
+    <text class="attr" x="14" y="64">numero</text>
+  </g>
+
+  <g id="direccion" transform="translate(640,70)">
+    <rect class="entity" width="220" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="14" y="24">Direccion</text>
+    <text class="attr" x="14" y="44">PK iddireccion</text>
+    <text class="attr" x="14" y="64">nombre</text>
+  </g>
+
+  <g id="sexo" transform="translate(50,240)">
+    <rect class="entity" width="200" height="60" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">Sexo</text>
+    <text class="attr" x="12" y="44">PK id — nombre</text>
+  </g>
+
+  <g id="estadocivil" transform="translate(260,240)">
+    <rect class="entity" width="240" height="60" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">EstadoCivil</text>
+    <text class="attr" x="12" y="44">PK idestadocivil — nombre</text>
+  </g>
+
+  <g id="universidad" transform="translate(640,240)">
+    <rect class="entity" width="240" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">Universidad</text>
+    <text class="attr" x="12" y="44">PK id — nombre</text>
+    <text class="attr" x="12" y="64">clave</text>
+  </g>
+
+  <g id="estudiantes" transform="translate(50,360)">
+    <rect class="entity" width="280" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">Estudiantes</text>
+    <text class="attr" x="12" y="44">PK id — nombre</text>
+    <text class="attr" x="12" y="64">matricula — universidad_id(FK)</text>
+  </g>
+
+  <g id="profesores" transform="translate(360,360)">
+    <rect class="entity" width="280" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">Profesores</text>
+    <text class="attr" x="12" y="44">PK id — nombre</text>
+    <text class="attr" x="12" y="64">rfc — universidad_id(FK)</text>
+  </g>
+
+  <g id="users" transform="translate(640,360)">
+    <rect class="entity" width="280" height="80" rx="8" ry="8"/>
+    <text class="entity_title" x="12" y="24">Users</text>
+    <text class="attr" x="12" y="44">PK id — name, email</text>
+    <text class="attr" x="12" y="64">password, role</text>
+  </g>
+
+  <!-- Relationships: draw lines (crow's foot notation) -->
+  <!-- Persona has many Telefonos (1:N) -->
+  <line class="fk_line" x1="230" y1="120" x2="360" y2="120" />
+  <text class="card" x="280" y="110">1</text>
+  <text class="card" x="350" y="110">N</text>
+
+  <!-- Persona has many Direcciones (1:N) -->
+  <line class="fk_line" x1="290" y1="120" x2="640" y2="120" />
+  <text class="card" x="420" y="110">1</text>
+  <text class="card" x="620" y="110">N</text>
+
+  <!-- Persona - Sexo (N:1) -->
+  <line class="fk_line" x1="140" y1="180" x2="200" y2="240" />
+  <text class="card" x="155" y="220">N</text>
+  <text class="card" x="235" y="220">1</text>
+
+  <!-- Persona - EstadoCivil (N:1) -->
+  <line class="fk_line" x1="250" y1="180" x2="350" y2="240" />
+  <text class="card" x="265" y="220">N</text>
+  <text class="card" x="350" y="220">1</text>
+
+  <!-- Estudiantes/Profesores linked to Universidad (N:1) -->
+  <line class="fk_line" x1="210" y1="420" x2="640" y2="300" />
+  <text class="card" x="360" y="360">N</text>
+  <text class="card" x="590" y="325">1</text>
+
+  <!-- Optionally, persona may be used to reference estudiantes/profesores - 1:1 conceptually, depends on design -->
+  <line class="fk_line" x1="125" y1="200" x2="200" y2="360" />
+  <text class="card" x="120" y="290">1</text>
+  <text class="card" x="200" y="335">1</text>
+
+  <!-- Legend -->
+  <rect x="10" y="620" width="380" height="68" rx="6" ry="6" fill="#fff" stroke="#ccc" />
+  <text x="24" y="640" font-family="Arial" font-size="12">Legend: PK = Primary Key, FK = Foreign Key</text>
+  <text x="24" y="658" font-family="Arial" font-size="12">Cardinalities: 1 (one), N (many)</text>
+
+</svg>
