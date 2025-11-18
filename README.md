@@ -12,61 +12,63 @@ Este README público explica las características principales, la ejecución rá
 - Módulos académicos: `Estudiante`, `Profesor`, `Universidad`.
 - Catálogos de referencia: `Sexo`, `Estado Civil` y más.
 - Scripts de migración y seed para desarrollo: `scripts/migrate.php`, `scripts/seed.php`.
-Puedes encontrar un diagrama ER simple y un script SQL del esquema en `Imagenes de evidencias/er_diagram_er.svg` y `scripts/schema_dump.sql`.
+Puedes encontrar el script SQL del esquema en `scripts/schema_dump.sql`.
+
+> Nota: el siguiente diagrama ER está en formato Mermaid; si tu visor de Markdown no renderiza Mermaid, puedes copiar el bloque y pegarlo en https://mermaid.live/ para ver el diagrama renderizado.
 
 ### Diagrama ER (Mermaid)
 
 ```mermaid
 erDiagram
   PERSONA {
-    INT idpersona PK
-    VARCHAR nombres
-    VARCHAR apellidos
-    DATE fechanacimiento
-    VARCHAR rol
-    TEXT detalle
-    INT idsexo FK
-    INT idestadocivil FK
+    int idpersona PK
+    string nombres
+    string apellidos
+    string fechanacimiento
+    string rol
+    string detalle
+    int idsexo FK
+    int idestadocivil FK
   }
   SEXO {
-    INT id PK
-    VARCHAR nombre
+    int id PK
+    string nombre
   }
   ESTADOCIVIL {
-    INT idestadocivil PK
-    VARCHAR nombre
+    int idestadocivil PK
+    string nombre
   }
   TELEFONO {
-    INT idtelefono PK
-    VARCHAR numero
-    INT idpersona FK
+    int idtelefono PK
+    string numero
+    int idpersona FK
   }
   DIRECCION {
-    INT iddireccion PK
-    VARCHAR nombre
-    INT idpersona FK
+    int iddireccion PK
+    string nombre
+    int idpersona FK
   }
   UNIVERSIDAD {
-    INT id PK
-    VARCHAR nombre
-    VARCHAR clave
+    int id PK
+    string nombre
+    string clave
   }
   ESTUDIANTES {
-    INT id PK
-    VARCHAR nombre
-    VARCHAR matricula
-    INT universidad_id FK
+    int id PK
+    string nombre
+    string matricula
+    int universidad_id FK
   }
   PROFESORES {
-    INT id PK
-    VARCHAR nombre
-    VARCHAR rfc
-    INT universidad_id FK
+    int id PK
+    string nombre
+    string rfc
+    int universidad_id FK
   }
   USERS {
-    INT id PK
-    VARCHAR name
-    VARCHAR email
+    int id PK
+    string name
+    string email
   }
 
   PERSONA ||--o{ TELEFONO : has
@@ -82,6 +84,7 @@ erDiagram
 ---
 
 ## Quick start (público)
+
 
 Recomendado: usar Docker / docker-compose.
 
@@ -191,7 +194,7 @@ Nota: En el código del proyecto, hay helpers (`entity_helper.php`) para inserta
 
 ---
 
-Puedes encontrar un diagrama ER simple y un script SQL del esquema en `Imagenes de evidencias/er_diagram.svg` y `scripts/schema_dump.sql`.
+Puedes encontrar el script SQL del esquema en `scripts/schema_dump.sql`.
 
 ---
 
